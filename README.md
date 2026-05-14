@@ -1,16 +1,24 @@
 # KMeans-Image-Compression
+
 Implementation of the K-Means clustering algorithm from scratch in Python for lossy image compression and color-space optimization.
+
+---
+
+## 🚀 Quick Links
+* **Core Implementation**: [kmeans_compression.py](./kmeans_compression.py) (Manual implementation of the K-Means logic)
+* **Demonstration**: [C3_W1_KMeans_Assignment.ipynb](./C3_W1_KMeans_Assignment.ipynb) (Notebook with visualizations)
 
 ---
 
 ## Table of Contents
 1. [Description of Technology](#description-of-technology)
 2. [Description of the Process](#description-of-the-process)
-3. [Project Background & Motivation](#project-background--motivation)
-4. [Problem Statement](#problem-statement)
-5. [Intended Use](#intended-use)
-6. [Challenges & Limitations](#challenges--limitations)
-7. [Credits](#credits)
+3. [Visual Results](#visual-results)
+4. [Project Background & Motivation](#project-background--motivation)
+5. [Problem Statement](#problem-statement)
+6. [Intended Use](#intended-use)
+7. [Challenges & Limitations](#challenges--limitations)
+8. [Credits](#credits)
 
 ---
 
@@ -31,8 +39,21 @@ The project followed a modular pipeline:
 3.  **Update (Maximization)**: Re-computing centroids based on the mean of all assigned points.
 4.  **Convergence**: Iterating the process until the centroids stabilize.
 
+**Core Code Reference:** The manual implementation of Exercise 1 (Centroid Assignment) and Exercise 2 (Centroid Update) can be found in [kmeans_compression.py](./kmeans_compression.py).
+
 ### Why?
 I utilized an **iterative optimization approach** to minimize the "distortion" (cost function). By isolating the "Assignment" and "Update" logic into separate functions, the code remains readable and easily testable against synthetic datasets before being applied to high-dimensional image data.
+
+---
+
+## Visual Results
+The algorithm was tested by compressing a 24-bit color image into a 4-bit representation (16 colors).
+
+| Original Image (thousands of colors) | Compressed Image (K=16) |
+| :---: | :---: |
+| ![Original Image Placeholder](./bird_small.png) | ![Compressed Image Placeholder](./bird_compressed.png) |
+
+> **Note:** The compressed image retains the essential visual structure and color depth of the original while significantly reducing the data required to represent each pixel.
 
 ---
 
