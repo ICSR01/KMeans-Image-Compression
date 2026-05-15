@@ -55,7 +55,7 @@ The algorithm was tested by compressing a 24-bit color image into a 4-bit repres
 
 | Original Image (thousands of colors) | Compressed Image (K=16) |
 | :---: | :---: |
-|<img width="330" height="342" alt="Original Image" src="https://github.com/user-attachments/assets/9059c130-c49f-4cb9-b3bf-1810069d3159" />|<img width="327" height="341" alt="Compressed Image" src="https://github.com/user-attachments/assets/e892a1aa-218f-4515-8cf8-ae60f557830b" />|
+|<img width="330" height="342" alt="Original Image" src="https://github.com/user-attachments/assets/9059c130-c49f-4cb9-b3bf-1810069d3159" />|<img width="330" height="342" alt="Compressed Image" src="https://github.com/user-attachments/assets/e892a1aa-218f-4515-8cf8-ae60f557830b" />|
 
 
 
