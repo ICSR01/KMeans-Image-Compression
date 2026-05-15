@@ -1,0 +1,15 @@
+# Global owner - @ICSR01 is responsible for all files
+* @ICSR01
+
+# Algorithm logic - Requires @ICSR01 review for any changes
+/kmeans_compression.py   @ICSR01
+
+# Documentation and project setup
+/README.md              @ICSR01
+/CONTRIBUTING.md        @ICSR01
+/requirements.txt       @ICSR01
+/CODEOWNERS             @ICSR01
+
+# Helper utilities and data
+/utils.py               @ICSR01
+/data/                  @ICSR01
