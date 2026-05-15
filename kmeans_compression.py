@@ -32,8 +32,8 @@ def run_k_means(X, initial_centroids, max_iters=10, plot_progress=False):
         plt.figure(figsize=(8, 6))
 
     for i in range(max_iters):
-        # Output progress
-        print(f"K-Means iteration {i}/{max_iters-1}...", end="\r")
+        # Human-friendly iteration count (1/10 to 10/10)
+        print(f"K-Means iteration {i+1}/{max_iters}...", end="\r")
         
         # Assignment step
         idx = find_closest_centroids(X, centroids)
@@ -47,6 +47,8 @@ def run_k_means(X, initial_centroids, max_iters=10, plot_progress=False):
         centroids = compute_centroids(X, idx, K)
     
     if plot_progress:
+        # Save function removed as requested
+        print("\nK-Means training complete.")
         plt.show()
         
     return centroids, idx
