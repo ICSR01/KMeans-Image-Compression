@@ -1,0 +1,8 @@
+# Scientific computing and vectorized math
+numpy>=1.23.0
+
+# Data visualization and image rendering
+matplotlib>=3.7.0
+
+# Image processing backend for matplotlib
+Pillow>=9.4.0
