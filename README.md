@@ -7,6 +7,7 @@ Implementation of the K-Means clustering algorithm from scratch in Python for lo
 ## 🚀 Quick Links
 * **Core Implementation**: [kmeans_compression.py](./kmeans_compression.py) (Manual implementation of the K-Means logic)
 * **Demonstration**: [C3_W1_KMeans_Assignment.ipynb](./C3_W1_KMeans_Assignment.ipynb) (Notebook with visualizations)
+* **Helper Utilities**: [utils.py](./utils.py) (Auxiliary functions for data loading and visualization)
 
 ---
 
@@ -26,9 +27,12 @@ Implementation of the K-Means clustering algorithm from scratch in Python for lo
 * **Python**: The primary language for algorithm development and data handling.
 * **NumPy**: Utilized for high-performance vectorized linear algebra.
 * **Matplotlib**: Employed for 2D/3D data visualization and image rendering.
+* **utils.py**: A dedicated helper script containing visualization and data-loading functions provided by the Coursera curriculum.
 
 ### Why?
 The choice of **NumPy** was a mechanical necessity for this project. The K-Means algorithm requires calculating Euclidean distances across thousands of pixels ($128 \times 128$) and multiple centroids. Standard Python loops would lead to significant latency; NumPy’s vectorization allows for simultaneous broadcasting, ensuring the model converges in real-time.
+
+By offloading visualization logic to **utils.py**, the project maintains a strict focus on the mathematical implementation and optimization of the clustering algorithm itself.
 
 ---
 
@@ -51,7 +55,7 @@ The algorithm was tested by compressing a 24-bit color image into a 4-bit repres
 
 | Original Image (thousands of colors) | Compressed Image (K=16) |
 | :---: | :---: |
-| ![Original Image Placeholder](./bird_small.png) | ![Compressed Image Placeholder](./bird_compressed.png) |
+| ![Original Image](./bird_small.png) | ![Compressed Image](./bird_compressed.png) |
 
 > **Note:** The compressed image retains the essential visual structure and color depth of the original while significantly reducing the data required to represent each pixel.
 
