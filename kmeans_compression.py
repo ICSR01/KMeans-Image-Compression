@@ -1,78 +1,103 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import load_data, plot_progress_kMeans # Import helpers
 
 def find_closest_centroids(X, centroids):
-    """
-    Assigns every data point to the nearest centroid.
-    """
     K = centroids.shape[0]
     idx = np.zeros(X.shape[0], dtype=int)
-
     for i in range(X.shape[0]):
-        # Calculate squared Euclidean distance to each centroid
         distances = np.sum((X[i] - centroids)**2, axis=1)
-        # Assign to the index of the minimum distance
         idx[i] = np.argmin(distances)
-        
     return idx
 
 def compute_centroids(X, idx, K):
-    """
-    Recalculates centroids by taking the mean of all points assigned to each cluster.
-    """
     m, n = X.shape
     centroids = np.zeros((K, n))
-    
     for k in range(K):
         points = X[idx == k]
         if len(points) > 0:
             centroids[k] = np.mean(points, axis=0)
-            
     return centroids
 
-def run_k_means(X, initial_centroids, max_iters=10):
-    """
-    The main loop that runs the K-Means algorithm.
-    """
+# --- MODIFIED RUN_K_MEANS TO SUPPORT VISUALIZATION ---
+def run_k_means(X, initial_centroids, max_iters=10, plot_progress=False):
+    m, n = X.shape
+    K = initial_centroids.shape[0]
     centroids = initial_centroids
+    previous_centroids = centroids    
+    idx = np.zeros(m)
+    
+    # Create a figure if we are plotting progress
+    if plot_progress:
+        plt.figure(figsize=(8, 6))
+
     for i in range(max_iters):
+        # Output progress
+        print(f"K-Means iteration {i}/{max_iters-1}...", end="\r")
+        
+        # Assignment step
         idx = find_closest_centroids(X, centroids)
-        centroids = compute_centroids(X, idx, centroids.shape[0])
+        
+        # Visualization step (only for 2D data)
+        if plot_progress:
+            plot_progress_kMeans(X, centroids, previous_centroids, idx, K, i)
+            previous_centroids = centroids
+            
+        # Update step
+        centroids = compute_centroids(X, idx, K)
+    
+    if plot_progress:
+        plt.show()
+        
     return centroids, idx
 
 def initialize_centroids(X, K):
-    """
-    Randomly selects K data points as initial centroids.
-    """
     randidx = np.random.permutation(X.shape[0])
     return X[randidx[:K]]
 
-# --- Example Usage for Image Compression ---
 if __name__ == "__main__":
-    # 1. Load an image (assuming a local file named 'bird.png')
-    # Use plt.imread or any sample image array
+    # --- PART 1: 2D SAMPLE DATASET VISUALIZATION ---
+    print("Step 1: Visualizing K-Means on Sample 2D Dataset")
+    try:
+        X_sample = load_data() # Loads from data/ex7_X.npy
+        
+        # Set initial centroids as per the exercise
+        initial_centroids_sample = np.array([[3, 3], [6, 2], [8, 5]])
+        K_sample = 3
+        max_iters_sample = 10
+        
+        # Run and Plot
+        run_k_means(X_sample, initial_centroids_sample, max_iters_sample, plot_progress=True)
+        
+    except FileNotFoundError:
+        print("Error: 'data/ex7_X.npy' not found. Skip to image compression.")
+
+    # --- PART 2: IMAGE COMPRESSION ---
+    print("\nStep 2: Running Image Compression Demo")
     try:
         original_img = plt.imread('bird_small.png')
-        
-        # 2. Reshape image to (N_pixels, 3) where N = width * height
+        # Normalize if necessary (some formats load as 0-255, others 0-1)
+        if np.max(original_img) > 1.0:
+            original_img = original_img / 255.0
+            
         X_img = original_img.reshape(-1, 3)
+        K_img = 16
+        initial_centroids_img = initialize_centroids(X_img, K_img)
         
-        # 3. Run K-Means to find 16 colors (K=16)
-        K = 16
-        initial_centroids = initialize_centroids(X_img, K)
-        centroids, idx = run_k_means(X_img, initial_centroids, max_iters=10)
+        # Run (We don't plot progress for images because thousands of points is too slow)
+        centroids_img, idx_img = run_k_means(X_img, initial_centroids_img, max_iters=10, plot_progress=False)
         
-        # 4. Map each pixel to its centroid color
-        X_compressed = centroids[idx, :]
+        # Reconstruct
+        X_compressed = centroids_img[idx_img, :]
         compressed_img = X_compressed.reshape(original_img.shape)
         
-        # 5. Display results
+        # Display
         fig, ax = plt.subplots(1, 2, figsize=(12, 6))
         ax[0].imshow(original_img)
         ax[0].set_title('Original Image')
         ax[1].imshow(compressed_img)
-        ax[1].set_title(f'Compressed Image (K={K})')
+        ax[1].set_title(f'Compressed Image (K={K_img})')
         plt.show()
         
     except FileNotFoundError:
-        print("Image file not found. Place 'bird_small.png' in the directory to run the demo.")
+        print("Error: 'bird_small.png' not found.")
