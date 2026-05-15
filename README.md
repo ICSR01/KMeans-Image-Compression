@@ -6,7 +6,6 @@ Implementation of the K-Means clustering algorithm from scratch in Python for lo
 
 ## 🚀 Quick Links
 * **Core Implementation**: [kmeans_compression.py](./kmeans_compression.py) (Manual implementation of the K-Means logic)
-* **Demonstration**: [C3_W1_KMeans_Assignment.ipynb](./C3_W1_KMeans_Assignment.ipynb) (Notebook with visualizations)
 * **Helper Utilities**: [utils.py](./utils.py) (Auxiliary functions for data loading and visualization)
 
 ---
