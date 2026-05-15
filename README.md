@@ -13,12 +13,13 @@ Implementation of the K-Means clustering algorithm from scratch in Python for lo
 ## Table of Contents
 1. [Description of Technology](#description-of-technology)
 2. [Description of the Process](#description-of-the-process)
-3. [Visual Results](#visual-results)
-4. [Project Background & Motivation](#project-background--motivation)
-5. [Problem Statement](#problem-statement)
-6. [Intended Use](#intended-use)
-7. [Challenges & Limitations](#challenges--limitations)
-8. [Credits](#credits)
+3. [Algorithm Demonstration (2D Dataset)](#algorithm-demonstration-2d-dataset)
+4. [Visual Results](#visual-results)
+5. [Project Background & Motivation](#project-background--motivation)
+6. [Problem Statement](#problem-statement)
+7. [Intended Use](#intended-use)
+8. [Challenges & Limitations](#challenges--limitations)
+9. [Credits](#credits)
 
 ---
 
@@ -29,7 +30,7 @@ Implementation of the K-Means clustering algorithm from scratch in Python for lo
 * **utils.py**: A dedicated helper script containing visualization and data-loading functions provided by the Coursera curriculum.
 
 ### Why?
-The choice of **NumPy** was a mechanical necessity for this project. The K-Means algorithm requires calculating Euclidean distances across thousands of pixels ($128 \times 128$) and multiple centroids. Standard Python loops would lead to significant latency; NumPy’s vectorization allows for simultaneous broadcasting, ensuring the model converges in real-time.
+The choice of **NumPy** was a mechanical necessity for this project. The K-Means algorithm requires calculating Euclidean distances across thousands of pixels (**128 x 128**) and multiple centroids. Standard Python loops would lead to significant latency; NumPy’s vectorization allows for simultaneous broadcasting, ensuring the model converges in real-time.
 
 By offloading visualization logic to **utils.py**, the project maintains a strict focus on the mathematical implementation and optimization of the clustering algorithm itself.
 
@@ -37,10 +38,10 @@ By offloading visualization logic to **utils.py**, the project maintains a stric
 
 ## Description of the Process
 The project followed a modular pipeline:
-1.  **Centroid Initialization**: Selecting initial points to serve as the "center" of clusters.
-2.  **Assignment (Expectation)**: Calculating distances and assigning each pixel to the nearest centroid.
-3.  **Update (Maximization)**: Re-computing centroids based on the mean of all assigned points.
-4.  **Convergence**: Iterating the process until the centroids stabilize.
+1. **Centroid Initialization**: Selecting initial points to serve as the "center" of clusters.
+2. **Assignment (Expectation)**: Calculating distances and assigning each pixel to the nearest centroid.
+3. **Update (Maximization)**: Re-computing centroids based on the mean of all assigned points.
+4. **Convergence**: Iterating the process until the centroids stabilize.
 
 **Core Code Reference:** The manual implementation of Exercise 1 (Centroid Assignment) and Exercise 2 (Centroid Update) can be found in [kmeans_compression.py](./kmeans_compression.py).
 
@@ -49,14 +50,26 @@ I utilized an **iterative optimization approach** to minimize the "distortion" (
 
 ---
 
+## Algorithm Demonstration (2D Dataset)
+To validate the mathematical core of the algorithm, it was first applied to a 2D sample dataset. This allows for a clear visualization of how centroids migrate toward the centers of data density.
+
+<p align="center">
+  <img src="./kmeans_2d_convergence.png" alt="K-Means 2D Convergence" width="500">
+</p>
+
+**Technical Breakdown:**
+* **Initialization**: Centroids are placed at initial coordinates.
+* **Trajectory**: The black lines track the movement of the centroids through **10 iterations**.
+* **Result**: The algorithm successfully partitions the abstract data into three distinct clusters, confirming the logic is sound before processing complex image data.
+
+---
+
 ## Visual Results
-The algorithm was tested by compressing a 24-bit color image into a 4-bit representation (16 colors).
+The algorithm was tested by compressing a 24-bit color image into a 4-bit representation (**16 colors**).
 
 | Original Image (thousands of colors) | Compressed Image (K=16) |
 | :---: | :---: |
 |<img width="330" height="342" alt="Original Image" src="https://github.com/user-attachments/assets/9059c130-c49f-4cb9-b3bf-1810069d3159" />|<img width="330" height="342" alt="Compressed Image" src="https://github.com/user-attachments/assets/e892a1aa-218f-4515-8cf8-ae60f557830b" />|
-
-
 
 > **Note:** The compressed image retains the essential visual structure and color depth of the original while significantly reducing the data required to represent each pixel.
 
@@ -72,7 +85,7 @@ The motivation was to move beyond simple classification and understand how machi
 ---
 
 ## Problem Statement
-**What problem it hopes to solve:** High-resolution images consume significant storage and bandwidth. This project addresses **data footprint reduction**. By clustering similar colors and representing them with a single centroid, we can reduce an image's color palette (e.g., from thousands of colors to just 16), achieving substantial compression with minimal loss in visual quality.
+**What problem it hopes to solve:** High-resolution images consume significant storage and bandwidth. This project addresses **data footprint reduction**. By clustering similar colors and representing them with a single centroid, we can reduce an image's color palette (e.g., from thousands of colors to just **16**), achieving substantial compression with minimal loss in visual quality.
 
 ---
 
@@ -85,7 +98,7 @@ The motivation was to move beyond simple classification and understand how machi
 
 ## Challenges & Limitations
 * **Challenges**: A significant hurdle was the **Local Optima** problem. Since K-Means is sensitive to initial centroid positions, poor initialization can lead to suboptimal clustering. I addressed this by implementing a random initialization strategy to increase the likelihood of finding a global optimum.
-* **Limitations**: The algorithm requires the user to pre-define the number of clusters ($K$). Furthermore, K-Means assumes that clusters are spherical and of similar size, which may not accurately reflect every data distribution.
+* **Limitations**: The algorithm requires the user to pre-define the number of clusters (**K**). Furthermore, K-Means assumes that clusters are spherical and of similar size, which may not accurately reflect every data distribution.
 
 ---
 
